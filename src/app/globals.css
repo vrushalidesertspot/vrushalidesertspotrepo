@@ -1,0 +1,47 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --primary-pink: #FF69B4;
+    --primary-light-pink: #FFB6C1;
+    --primary-rose: #E91E63;
+    --primary-hot-pink: #FF1493;
+    --primary-cream: #FFF0F5;
+    --primary-gold: #D4AF37;
+    --primary-dark: #880E4F;
+  }
+
+  body {
+    @apply bg-primary-cream text-primary-dark;
+  }
+}
+
+@layer components {
+  .glass {
+    @apply bg-white/70 backdrop-blur-md border border-white/20;
+  }
+
+  .glass-dark {
+    @apply bg-primary-dark/70 backdrop-blur-md border border-white/10;
+  }
+
+  .btn-primary {
+    @apply bg-[#E91E63] text-white px-6 py-3 rounded-full font-medium hover:bg-[#FF1493] transition-all duration-300 transform hover:scale-105 shadow-lg;
+  }
+
+  .btn-secondary {
+    @apply bg-[#FF69B4] text-white px-6 py-3 rounded-full font-medium hover:bg-[#E91E63] transition-all duration-300 transform hover:scale-105 shadow-lg;
+  }
+
+  .card-hover {
+    @apply transition-all duration-300 hover:shadow-2xl hover:-translate-y-2;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
