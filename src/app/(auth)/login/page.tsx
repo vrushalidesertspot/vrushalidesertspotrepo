@@ -29,9 +29,9 @@ export default function LoginPage() {
   const router = useRouter()
   const [method, setMethod] = useState<"email" | "phone">("email")
   const [googleLoading, setGoogleLoading] = useState(false)
-  const [showOtpInput, setShowOtpInput] = useState(false)
-  const [otpLoading, setOtpLoading] = useState(false)
-  const [phone, setPhone] = useState("")
+  const [loading, setLoading] = useState(false)
+  const [otpSent, setOtpSent] = useState(false)
+  const [phoneNumber, setPhoneNumber] = useState("")
 
   const emailForm = useForm<z.infer<typeof emailSchema>>({
     resolver: zodResolver(emailSchema),
@@ -248,8 +248,6 @@ export default function LoginPage() {
                     />
                   </svg>
                   Sign in with Google
-                    </span>
-                  )}
                 </Button>
               </div>
             </div>
