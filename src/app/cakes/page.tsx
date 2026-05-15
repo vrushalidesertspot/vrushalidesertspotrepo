@@ -55,22 +55,22 @@ export default function CakesPage() {
     // Sort
     switch (sortBy) {
       case "price-low":
-        filtered.sort((a, b) => a.price - b.price);
+        filtered.sort((a, b) => (a.price || 0) - (b.price || 0));
         break;
       case "price-high":
-        filtered.sort((a, b) => b.price - a.price);
+        filtered.sort((a, b) => (b.price || 0) - (a.price || 0));
         break;
       case "rating":
-        filtered.sort((a, b) => b.rating - a.rating);
+        filtered.sort((a, b) => ((b as any).rating || 0) - ((a as any).rating || 0));
         break;
       case "popular":
       default:
-        filtered.sort((a, b) => b.reviews - a.reviews);
+        filtered.sort((a, b) => ((b as any).reviews || 0) - ((a as any).reviews || 0));
         break;
     }
 
     return filtered;
-  }, [searchQuery, selectedCategory, sortBy]);
+  }, [cakes, searchQuery, selectedCategory, sortBy]);
 
   return (
     <div className="pt-20 min-h-screen bg-primary-cream">
