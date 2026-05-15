@@ -94,7 +94,7 @@ export default function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
                         </p>
                         {item.customMessage && (
                           <p className="text-xs text-primary-gold mt-1 italic">
-                            "{item.customMessage}"
+                            &quot;{item.customMessage}&quot;
                           </p>
                         )}
                         <div className="flex items-center justify-between mt-3">

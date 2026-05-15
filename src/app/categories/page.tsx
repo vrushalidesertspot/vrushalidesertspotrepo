@@ -137,7 +137,7 @@ export default function CategoriesPage() {
             viewport={{ once: true }}
           >
             <h2 className="font-playfair text-4xl md:text-5xl font-bold text-white mb-6">
-              Can't Find What You're Looking For?
+              Can&apos;t Find What You&apos;re Looking For?
             </h2>
             <p className="text-white/90 text-lg mb-8 max-w-2xl mx-auto">
               Create your own custom cake with our premium custom cake builder

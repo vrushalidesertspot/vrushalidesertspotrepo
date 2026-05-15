@@ -9,6 +9,8 @@ interface CategoryDetailPageProps {
   params: Promise<{ id: string }>;
 }
 
+export const dynamicParams = false;
+
 const categoryDescriptions: Record<string, string> = {
   "Birthday Cakes": "Celebrate every birthday with a vibrant cake designed to delight the guest of honor.",
   "Wedding Cakes": "Elegant tiered cakes crafted for unforgettable wedding moments.",
