@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useMemo, useEffect } from "react";
-import { useSearchParams } from "next/navigation";
 import { motion } from "framer-motion";
 import { Search, SlidersHorizontal, Grid, List, Heart, Eye } from "lucide-react";
 import { cakes } from "@/data/cakes";
@@ -10,19 +9,16 @@ import CakeCard from "@/components/cakes/CakeCard";
 const categories = ["All", "Birthday Cakes", "Wedding Cakes", "Chocolate Cakes", "Fruit Cakes", "Cupcakes", "Premium Cakes"];
 
 export default function CakesPage() {
-  const searchParams = useSearchParams();
-  const queryCategory = searchParams?.get("category") ?? "All";
-
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState(queryCategory);
+  const [selectedCategory, setSelectedCategory] = useState("All");
   const [sortBy, setSortBy] = useState("popular");
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
 
   useEffect(() => {
-    if (queryCategory) {
-      setSelectedCategory(queryCategory);
-    }
-  }, [queryCategory]);
+    const params = new URLSearchParams(window.location.search);
+    const queryCategory = params.get("category") ?? "All";
+    setSelectedCategory(queryCategory);
+  }, []);
 
   const filteredAndSortedCakes = useMemo(() => {
     let filtered = cakes;

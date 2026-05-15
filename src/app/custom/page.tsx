@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { useSearchParams } from "next/navigation";
 import { motion } from "framer-motion";
 import { Upload, Calendar, MapPin, Phone, Mail, Cake, CheckCircle } from "lucide-react";
 import toast from "react-hot-toast";
@@ -28,7 +27,6 @@ export default function CustomOrderPage() {
   const [previewImage, setPreviewImage] = useState("");
   const [selectedCakeName, setSelectedCakeName] = useState("");
   const [hydrated, setHydrated] = useState(false);
-  const searchParams = useSearchParams();
 
   useEffect(() => {
     setMinDeliveryDate(new Date().toISOString().split("T")[0]);
@@ -76,8 +74,9 @@ export default function CustomOrderPage() {
 
   useEffect(() => {
     setHydrated(true);
-    const imageQuery = searchParams?.get("image");
-    const nameQuery = searchParams?.get("name");
+    const params = new URLSearchParams(window.location.search);
+    const imageQuery = params.get("image");
+    const nameQuery = params.get("name");
 
     if (imageQuery) {
       setPreviewImage(imageQuery);
@@ -89,7 +88,7 @@ export default function CustomOrderPage() {
     if (nameQuery) {
       setSelectedCakeName(nameQuery);
     }
-  }, [searchParams]);
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
