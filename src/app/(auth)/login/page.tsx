@@ -28,18 +28,10 @@ const otpSchema = z.object({
 export default function LoginPage() {
   const router = useRouter()
   const [method, setMethod] = useState<"email" | "phone">("email")
-  const [otpSent, setOtpSent] = useState(false)
-  const [phoneNumber, setPhoneNumber] = useState("")
-  const [loading, setLoading] = useState(false)
   const [googleLoading, setGoogleLoading] = useState(false)
-  const [googleConfigured, setGoogleConfigured] = useState<boolean | null>(null)
-
-  useEffect(() => {
-    fetch("/api/auth/config-status")
-      .then((r) => r.json())
-      .then((data) => setGoogleConfigured(data.googleConfigured))
-      .catch(() => setGoogleConfigured(false))
-  }, [])
+  const [showOtpInput, setShowOtpInput] = useState(false)
+  const [otpLoading, setOtpLoading] = useState(false)
+  const [phone, setPhone] = useState("")
 
   const emailForm = useForm<z.infer<typeof emailSchema>>({
     resolver: zodResolver(emailSchema),
@@ -105,15 +97,15 @@ export default function LoginPage() {
   }
 
   const handleGoogleSignIn = async () => {
-    if (!googleConfigured) {
-      toast.error(
-        "Google Sign-In is not configured yet. Please add GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET to your environment variables.",
-        { duration: 5000 }
-      )
-      return
-    }
     setGoogleLoading(true)
-    await signIn("google", { callbackUrl: "/profile" })
+    try {
+      await signIn("google", { callbackUrl: "/profile" })
+    } catch (error) {
+      toast.error("Google login failed. Please ensure environment variables are set.")
+      console.error(error)
+    } finally {
+      setGoogleLoading(false)
+    }
   }
 
   return (
@@ -233,7 +225,7 @@ export default function LoginPage() {
                 <Button
                   type="button"
                   variant="outline"
-                  className={`w-full bg-white relative ${!googleConfigured ? "opacity-75" : ""}`}
+                  className="w-full bg-white relative"
                   onClick={handleGoogleSignIn}
                   isLoading={googleLoading}
                 >
@@ -256,9 +248,6 @@ export default function LoginPage() {
                     />
                   </svg>
                   Sign in with Google
-                  {googleConfigured === false && (
-                    <span className="ml-2 rounded-full bg-amber-100 px-2 py-0.5 text-xs text-amber-700">
-                      Setup required
                     </span>
                   )}
                 </Button>

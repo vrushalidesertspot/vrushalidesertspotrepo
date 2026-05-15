@@ -6,16 +6,23 @@ import { ShoppingCart, Menu, X, Search, User, Heart } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useCartStore } from "@/store/cartStore";
 import CartDrawer from "../cart/CartDrawer";
+import CheckoutModal from "../cart/CheckoutModal";
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
   const [hydrated, setHydrated] = useState(false);
   const totalItems = useCartStore((state) => state.getTotalItems());
 
   useEffect(() => {
     setHydrated(true);
   }, []);
+
+  const handleCheckoutTrigger = () => {
+    setIsCartOpen(false); // Close cart drawer
+    setTimeout(() => setIsCheckoutOpen(true), 300); // Open checkout modal
+  };
 
   const navLinks = [
     { name: "Home", href: "/" },
@@ -131,7 +138,17 @@ export default function Navbar() {
       </nav>
 
       {/* Cart Drawer */}
-      <CartDrawer isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
+      <CartDrawer 
+        isOpen={isCartOpen} 
+        onClose={() => setIsCartOpen(false)} 
+        onCheckout={handleCheckoutTrigger}
+      />
+
+      {/* Checkout Modal */}
+      <CheckoutModal 
+        isOpen={isCheckoutOpen} 
+        onClose={() => setIsCheckoutOpen(false)} 
+      />
     </>
   );
 }
