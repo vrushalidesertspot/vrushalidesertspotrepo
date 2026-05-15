@@ -3,18 +3,33 @@
 import { useState, useMemo, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Search, SlidersHorizontal, Grid, List, Heart, Eye } from "lucide-react";
-import { cakes } from "@/data/cakes";
+import { getCakes } from "@/app/actions/cakes";
 import CakeCard from "@/components/cakes/CakeCard";
+import { Cake } from "@/types";
 
 const categories = ["All", "Birthday Cakes", "Wedding Cakes", "Chocolate Cakes", "Fruit Cakes", "Cupcakes", "Premium Cakes"];
 
 export default function CakesPage() {
+  const [cakes, setCakes] = useState<Cake[]>([]);
+  const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [sortBy, setSortBy] = useState("popular");
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
 
   useEffect(() => {
+    async function loadCakes() {
+      try {
+        const data = await getCakes();
+        setCakes(data as any);
+      } catch (error) {
+        console.error("Failed to load cakes", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+    loadCakes();
+    
     const params = new URLSearchParams(window.location.search);
     const queryCategory = params.get("category") ?? "All";
     setSelectedCategory(queryCategory);
@@ -160,7 +175,12 @@ export default function CakesPage() {
       {/* Cakes Grid */}
       <section className="pb-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {filteredAndSortedCakes.length > 0 ? (
+          {loading ? (
+            <div className="flex flex-col items-center justify-center py-20">
+              <div className="w-16 h-16 border-4 border-primary-rose border-t-transparent rounded-full animate-spin mb-4" />
+              <p className="text-primary-dark/60 font-medium">Loading delicious cakes...</p>
+            </div>
+          ) : filteredAndSortedCakes.length > 0 ? (
             <div
               className={`grid gap-8 ${
                 viewMode === "grid"

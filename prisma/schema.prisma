@@ -17,11 +17,24 @@ model User {
   passwordHash  String?
   authProvider  String?   @default("credentials") // 'google', 'credentials', 'phone'
   isVerified    Boolean   @default(false)
+  role          String    @default("user") // 'user', 'admin'
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
 
   accounts      Account[]
   sessions      Session[]
+}
+
+model Cake {
+  id          String   @id @default(cuid())
+  name        String
+  description String?  @db.Text
+  price       Float
+  image       String?  @db.Text
+  category    String?
+  isAvailable Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
 
 model Account {

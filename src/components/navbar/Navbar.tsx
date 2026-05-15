@@ -79,6 +79,16 @@ export default function Navbar() {
                 <User className="w-5 h-5 text-primary-dark" />
               </Link>
               
+              {/* Admin Link */}
+              {session?.user?.role === "admin" && (
+                <Link
+                  href="/admin"
+                  className="hidden md:flex text-primary-dark font-medium hover:text-primary-rose transition-colors px-3 py-2 bg-primary-pink/20 rounded-lg"
+                >
+                  Admin Panel
+                </Link>
+              )}
+              
               {/* Cart Button */}
               <button
                 onClick={() => setIsCartOpen(true)}
@@ -131,6 +141,15 @@ export default function Navbar() {
                     {link.name}
                   </Link>
                 ))}
+                {session?.user?.role === "admin" && (
+                  <Link
+                    href="/admin"
+                    onClick={() => setIsMenuOpen(false)}
+                    className="block py-2 text-primary-dark font-bold bg-primary-pink/20 px-3 rounded-lg"
+                  >
+                    Admin Panel
+                  </Link>
+                )}
               </div>
             </motion.div>
           )}

