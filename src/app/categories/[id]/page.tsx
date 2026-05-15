@@ -6,7 +6,7 @@ import CakeCard from "@/components/cakes/CakeCard";
 import { Category } from "@/types";
 
 interface CategoryDetailPageProps {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }
 
 const categoryDescriptions: Record<string, string> = {

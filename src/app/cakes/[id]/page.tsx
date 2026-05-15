@@ -5,7 +5,7 @@ import { cakes } from "@/data/cakes";
 import { Cake } from "@/types";
 
 interface CakeDetailPageProps {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }
 
 export default async function CakeDetailPage({ params }: CakeDetailPageProps) {
