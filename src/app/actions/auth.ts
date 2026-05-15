@@ -3,6 +3,7 @@
 import { z } from "zod"
 import bcrypt from "bcryptjs"
 import prisma from "@/lib/prisma"
+import { sendVerificationEmail } from "./email-verification"
 
 const registerSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
@@ -38,6 +39,9 @@ export async function registerUser(formData: FormData) {
         passwordHash,
       },
     })
+
+    // Send verification email (async, don't wait for it to return success to the user)
+    sendVerificationEmail(email)
 
     return { success: true }
   } catch (error) {

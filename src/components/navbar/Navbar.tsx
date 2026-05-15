@@ -68,9 +68,9 @@ export default function Navbar() {
               <button className="hidden md:flex p-2 hover:bg-primary-pink/50 rounded-full transition-colors">
                 <Heart className="w-5 h-5 text-primary-dark" />
               </button>
-              <button className="hidden md:flex p-2 hover:bg-primary-pink/50 rounded-full transition-colors">
+              <Link href="/profile" className="hidden md:flex p-2 hover:bg-primary-pink/50 rounded-full transition-colors">
                 <User className="w-5 h-5 text-primary-dark" />
-              </button>
+              </Link>
               
               {/* Cart Button */}
               <button
