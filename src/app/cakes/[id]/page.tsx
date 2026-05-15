@@ -1,8 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { cakes } from "@/data/cakes";
+import { cakes as hardcodedCakes } from "@/data/cakes";
 import { Cake } from "@/types";
+import { getCakes } from "@/app/actions/cakes";
 
 interface CakeDetailPageProps {
   params: Promise<{ id: string }>;
@@ -10,7 +11,19 @@ interface CakeDetailPageProps {
 
 export default async function CakeDetailPage({ params }: CakeDetailPageProps) {
   const { id } = await params;
-  const cake: Cake | undefined = cakes.find((item) => item.id === id);
+  
+  let cake: Cake | undefined;
+  
+  try {
+    const dbCakes = await getCakes();
+    cake = (dbCakes as any).find((item: any) => item.id === id);
+  } catch (error) {
+    console.error("DB fetch failed", error);
+  }
+
+  if (!cake) {
+    cake = hardcodedCakes.find((item) => item.id === id);
+  }
 
   if (!cake) {
     notFound();
@@ -48,11 +61,12 @@ export default async function CakeDetailPage({ params }: CakeDetailPageProps) {
               <div className="rounded-3xl bg-white p-6 shadow-lg">
                 <h2 className="text-sm text-primary-dark/60 uppercase tracking-[0.2em] mb-3">Price</h2>
                 <p className="font-playfair text-3xl font-bold text-primary-rose">₹{cake.price}</p>
+                {!cake.isAvailable && <p className="text-red-500 text-xs font-bold mt-1">Out of Stock</p>}
               </div>
               <div className="rounded-3xl bg-white p-6 shadow-lg">
                 <h2 className="text-sm text-primary-dark/60 uppercase tracking-[0.2em] mb-3">Rating</h2>
-                <p className="text-primary-dark text-xl font-semibold">{cake.rating} / 5</p>
-                <p className="text-primary-dark/50 text-sm">{cake.reviews} reviews</p>
+                <p className="text-primary-dark text-xl font-semibold">{cake.rating || "4.5"} / 5</p>
+                <p className="text-primary-dark/50 text-sm">{cake.reviews || "10"} reviews</p>
               </div>
             </div>
 
@@ -60,10 +74,10 @@ export default async function CakeDetailPage({ params }: CakeDetailPageProps) {
               <h2 className="text-xl font-semibold text-primary-dark mb-4">Cake Details</h2>
               <div className="grid grid-cols-1 gap-3 text-primary-dark/70">
                 <div>
-                  <span className="font-semibold text-primary-dark">Flavors:</span> {cake.flavors.join(", ")}
+                  <span className="font-semibold text-primary-dark">Flavors:</span> {cake.flavors?.join(", ") || "Standard, Chocolate, Vanilla"}
                 </div>
                 <div>
-                  <span className="font-semibold text-primary-dark">Weights:</span> {cake.weights.map((w) => `${w} kg`).join(", ")}
+                  <span className="font-semibold text-primary-dark">Weights:</span> {cake.weights?.map((w) => `${w} kg`).join(", ") || "0.5 kg, 1 kg, 2 kg"}
                 </div>
                 <div>
                   <span className="font-semibold text-primary-dark">Eggless:</span> {cake.isEggless ? "Yes" : "No"}
