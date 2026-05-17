@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useCartStore } from "@/store/cartStore";
 import CartDrawer from "../cart/CartDrawer";
 import CheckoutModal from "../cart/CheckoutModal";
+import { useSession } from "next-auth/react";
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -14,6 +15,7 @@ export default function Navbar() {
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
   const [hydrated, setHydrated] = useState(false);
   const totalItems = useCartStore((state) => state.getTotalItems());
+  const { data: session } = useSession();
 
   useEffect(() => {
     setHydrated(true);
