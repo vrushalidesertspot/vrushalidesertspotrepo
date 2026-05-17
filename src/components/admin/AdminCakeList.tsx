@@ -191,7 +191,7 @@ export default function AdminCakeList({ initialCakes }: { initialCakes: Cake[] }
                 <label className="block text-sm font-medium text-gray-700 mb-1">Cake Name</label>
                 <input
                   required
-                  value={editingCake?.name}
+                  value={editingCake?.name || ""}
                   onChange={e => setEditingCake({ ...editingCake, name: e.target.value })}
                   className="w-full px-4 py-2 rounded-xl border border-gray-200 focus:ring-2 focus:ring-primary-rose outline-none"
                 />
@@ -225,7 +225,7 @@ export default function AdminCakeList({ initialCakes }: { initialCakes: Cake[] }
                 <label className="block text-sm font-medium text-gray-700 mb-1">Description</label>
                 <textarea
                   rows={3}
-                  value={editingCake?.description}
+                  value={editingCake?.description || ""}
                   onChange={e => setEditingCake({ ...editingCake, description: e.target.value })}
                   className="w-full px-4 py-2 rounded-xl border border-gray-200 focus:ring-2 focus:ring-primary-rose outline-none resize-none"
                 />
