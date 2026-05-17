@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { Phone, Mail, MapPin, Clock, MessageCircle } from "lucide-react";
 
 export default function ContactPage() {
-  const whatsappNumber = "918806861955";
+  const whatsappNumber = "919822525258";
   const whatsappMessage = "Hi! I'm interested in ordering a cake from Vrushali Desert Spot.";
   const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappMessage)}`;
 

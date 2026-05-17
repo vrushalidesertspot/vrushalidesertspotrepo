@@ -86,8 +86,8 @@ export default function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
     const encodedMessage = encodeURIComponent(message)
     const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMessage}`
 
-    // Redirect to WhatsApp
-    window.open(whatsappUrl, "_blank")
+    // Redirect to WhatsApp in the same tab to avoid popup blockers
+    window.location.href = whatsappUrl
     
     toast.success("Order placed! Redirecting to WhatsApp...")
     clearCart()

@@ -83,6 +83,7 @@ export default function CustomCakesBuilderPage() {
       isEggless: true,
       isBestseller: false,
       isTrending: false,
+      isAvailable: true,
     };
 
     addItem(customCake, selectedFlavor, parseFloat(selectedSize), customText);

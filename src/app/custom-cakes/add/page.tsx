@@ -119,6 +119,7 @@ export default function AddCustomCakePage() {
       isEggless: isEggless === "true",
       isBestseller: false,
       isTrending: false,
+      isAvailable: true,
     };
 
     const nextCakes = [newCake, ...createdCakes];

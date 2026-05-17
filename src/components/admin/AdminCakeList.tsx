@@ -202,8 +202,8 @@ export default function AdminCakeList({ initialCakes }: { initialCakes: Cake[] }
                   <input
                     type="number"
                     required
-                    value={editingCake?.price}
-                    onChange={e => setEditingCake({ ...editingCake, price: e.target.value })}
+                    value={editingCake?.price || ""}
+                    onChange={e => setEditingCake({ ...editingCake, price: parseFloat(e.target.value) || 0 })}
                     className="w-full px-4 py-2 rounded-xl border border-gray-200 focus:ring-2 focus:ring-primary-rose outline-none"
                   />
                 </div>
