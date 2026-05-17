@@ -210,7 +210,7 @@ export default function AdminCakeList({ initialCakes }: { initialCakes: Cake[] }
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Category</label>
                   <select
-                    value={editingCake?.category}
+                    value={editingCake?.category || ""}
                     onChange={e => setEditingCake({ ...editingCake, category: e.target.value })}
                     className="w-full px-4 py-2 rounded-xl border border-gray-200 focus:ring-2 focus:ring-primary-rose outline-none"
                   >
